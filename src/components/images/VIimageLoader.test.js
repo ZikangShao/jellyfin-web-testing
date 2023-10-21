@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'vitest';
-import imageLoader from './imageLoader';
+import getPrimaryImageAspectRatio from './imageLoader';
 
 describe('getPrimaryImageAspectRatio', () => {
     test('Given zero items, get null returned', () => {
         const items = [];
 
-        const result = imageLoader.getPrimaryImageAspectRatio(items);
+        const result = getPrimaryImageAspectRatio(items);
         expect(result).toBeNull();
     });
 
@@ -14,7 +14,7 @@ describe('getPrimaryImageAspectRatio', () => {
             { PrimaryImageAspectRatio: 201 / 300 }
         ];
 
-        const result = imageLoader.getPrimaryImageAspectRatio(items);
+        const result = getPrimaryImageAspectRatio(items);
         expect(result).toBeCloseTo(2 / 3);
     });
 
@@ -23,7 +23,7 @@ describe('getPrimaryImageAspectRatio', () => {
             { PrimaryImageAspectRatio: 32 / 19 }
         ];
 
-        const result = imageLoader.getPrimaryImageAspectRatio(items);
+        const result = getPrimaryImageAspectRatio(items);
         expect(result).toBeCloseTo(16 / 9);
     });
 
@@ -32,7 +32,7 @@ describe('getPrimaryImageAspectRatio', () => {
             { PrimaryImageAspectRatio: 100 / 99 }
         ];
 
-        const result = imageLoader.getPrimaryImageAspectRatio(items);
+        const result = getPrimaryImageAspectRatio(items);
         expect(result).toBeCloseTo(1);
     });
 
@@ -41,7 +41,7 @@ describe('getPrimaryImageAspectRatio', () => {
             { PrimaryImageAspectRatio: 401 / 300 }
         ];
 
-        const result = imageLoader.getPrimaryImageAspectRatio(items);
+        const result = getPrimaryImageAspectRatio(items);
         expect(result).toBeCloseTo(2 / 3);
     });
 });
