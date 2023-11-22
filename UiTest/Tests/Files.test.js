@@ -56,4 +56,24 @@ describe('File exploring tests', function () {
 
         // change page size setting back
     });
+
+    it('When I sign out from the user menu, I get back to the select server view', async function() {
+        // log in
+
+        // go to user menu
+
+        // click sign out
+
+        // i see the view is now select server view
+    });
+
+    it('When I click on the home button when viewing a folder, I get back to the home view', async function() {
+        // log in
+
+        // go to a folder
+
+        // click on home button
+
+        // i see the home view
+    });
 });
