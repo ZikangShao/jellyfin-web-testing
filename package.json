@@ -44,6 +44,7 @@
     "html-webpack-plugin": "5.5.3",
     "jest": "29.7.0",
     "mini-css-extract-plugin": "2.7.6",
+    "npm-run-all": "4.1.5",
     "postcss": "8.4.24",
     "postcss-loader": "7.3.3",
     "postcss-preset-env": "8.4.1",
@@ -157,6 +158,8 @@
     "test:jest": "jest",
     "test:runall": "vitest --environment jsdom",
     "test:coverage": "vitest './datetime.test.js' --environment jsdom --coverage",
+    "test:MochaUI": "mocha UiTest/Tests",
+    "test:UI": "npm-run-all --parallel start test:MochaUI",
     "stylelint": "npm run stylelint:css && npm run stylelint:scss",
     "stylelint:css": "stylelint \"src/**/*.css\"",
     "stylelint:scss": "stylelint --config=\".stylelintrc.scss.json\" \"src/**/*.scss\""

@@ -4,12 +4,21 @@ const assert = require('assert');
 const JellyfinPageModel = require('../PageModel/JellyfinPageModel');
 require('chromedriver');
 
-// Need to run set up for ALL tests
+/**
+ * Found here: https://stackoverflow.com/a/16077558
+ */
+function sleep(seconds) {
+    const e = new Date().getTime() + (seconds * 1000);
+    while (new Date().getTime() <= e) { /* empty */ }
+}
+
+// Need to wait until npm test finishes running
 before(function () {
-    require('../setup');
+    sleep(5);
 });
 
 describe('File exploring tests', function () {
+    this.timeout(20000);
     let driver;
     let pageModel;
 
