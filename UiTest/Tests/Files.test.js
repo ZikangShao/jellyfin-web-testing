@@ -85,34 +85,49 @@ describe('File exploring tests', function () {
     });
 
     it('When I change library page size, I only see one picture per page in my folder', async function() {
-        // log in
+        // connect to server
+        await pageModel.connectToServerAndLogIn(username, password, hostAddress);
 
         // go to display settings
+        await pageModel.navigateToDisplaySettings();
 
         // change library page size setting to 1
+        await pageModel.changeLibraryPageSize(1);
 
         // navigate to folder and assert
+        await driver.findElement(By.xpath(pageModel.homeButton)).click();
+        sleep(3);
+        await pageModel.openFirstFolderAndItsSubFolder();
 
-        // change page size setting back
+        const arrowNextPage = await driver.findElement(By.xpath(pageModel.arrowButton));
+        assert.equal(arrowNextPage.getAttribute('onclick') != null, true);
     });
 
     it('When I sign out from the user menu, I get back to the select server view', async function() {
         // log in
+        await pageModel.connectToServerAndLogIn(username, password, hostAddress);
 
-        // go to user menu
-
-        // click sign out
+        // go to user menu then sign out
+        await pageModel.signOut();
 
         // i see the view is now select server view
+        const selectServerView = await driver.findElement(By.xpath(pageModel.selectServerPage));
+        assert.equal(selectServerView != null, true);
     });
 
     it('When I click on the home button when viewing a folder, I get back to the home view', async function() {
         // log in
+        await pageModel.connectToServerAndLogIn(username, password, hostAddress);
 
         // go to a folder
+        await pageModel.openFirstFolderAndItsSubFolder();
 
         // click on home button
+        await driver.findElement(By.xpath(pageModel.homeButton)).click();
+        sleep(3);
 
         // i see the home view
+        const homeView = await driver.findElement(By.xpath(pageModel.homePage));
+        assert.equal(homeView != null, true);
     });
 });

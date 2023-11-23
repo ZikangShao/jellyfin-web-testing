@@ -22,6 +22,16 @@ class JellyfinPageModel {
     playAllButton = "//*[@id='reactRoot']/div[4]/div[3]/div[2]/div[1]/button[1]";
     shuffleButton = "//*[@id='reactRoot']/div[4]/div[3]/div[2]/div[1]/button[5]";
     slideShowContainer = '/html/body/div[6]/div/div[1]';
+    menuButton = "//*[@id='reactRoot']/div[3]/div[2]/div[1]/div[1]/button[3]";
+    settingsMenuButton = "//*[@id='reactRoot']/div[3]/div[1]/div/div[4]/a[2]";
+    displaySettings = "//*[@id='myPreferencesMenuPage']/div/div/div[1]/a[3]";
+    libraryPageSizeInput = "//*[@id='txtLibraryPageSize']";
+    saveSettingsButton = "//*[@id='displayPreferencesPage']/div/form/button";
+    homeButton = "//*[@id='reactRoot']/div[3]/div[2]/div[1]/div[1]/button[2]";
+    arrowButton = "//*[@id='reactRoot']/div[4]/div[3]/div[2]/div[3]/div/div/div/button[2]";
+    signOutButton = "//*[@id='reactRoot']/div[3]/div[1]/div/div[4]/a[3]";
+    selectServerPage = "//*[@id='selectServerPage']";
+    homePage = "//*[@id='indexPage']";
 
     /**
      * constructor
@@ -44,13 +54,47 @@ class JellyfinPageModel {
         sleep(3);
     }
 
-    async openFirstFolderAndItsSubFolder(){
+    async openFirstFolderAndItsSubFolder() {
         // open folder
         await this.driver.findElement(By.xpath(this.firstFolder)).click();
         sleep(3);
 
         // open sub-folder
         await this.driver.findElement(By.xpath(this.firstFolderSubFolder)).click();
+        sleep(3);
+    }
+
+    async navigateToDisplaySettings() {
+        // click on menu button
+        await this.driver.findElement(By.xpath(this.menuButton)).click();
+        sleep(3);
+
+        // click on settings
+        await this.driver.findElement(By.xpath(this.settingsMenuButton)).click();
+        sleep(3);
+
+        // click on display
+        await this.driver.findElement(By.xpath(this.displaySettings)).click();
+        sleep(3);
+    }
+
+    async changeLibraryPageSize(size) {
+        // fill out the input
+        const input = await this.driver.findElement(By.xpath(this.libraryPageSizeInput));
+        input.clear();
+        input.sendKeys(size);
+        sleep(3);
+
+        // click save
+        await this.driver.findElement(By.xpath(this.saveSettingsButton)).click();
+    }
+    async signOut() {
+        // click on menu button
+        await this.driver.findElement(By.xpath(this.menuButton)).click();
+        sleep(3);
+
+        // click on sign out button
+        await this.driver.findElement(By.xpath(this.signOutButton)).click();
         sleep(3);
     }
 }
