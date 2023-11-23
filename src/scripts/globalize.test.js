@@ -6,3 +6,12 @@ describe('getCurrentLocale', () => {
         expect(globalize.getCurrentLocale()).toBe('en-us');
     });
 });
+
+describe('getIsRTL', () => {
+    test('getIsRTL returns false', () => {
+        expect(globalize.getIsRTL()).toBe(false);
+    });
+    test('getIsRTL returns true', () => {
+        expect(!globalize.getIsRTL()).toBe(true);
+    });
+});
