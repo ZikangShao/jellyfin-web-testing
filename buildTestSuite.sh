@@ -1,36 +1,44 @@
 #!/bin/bash 
 
-EMAIL="emilysoolee@gmail.com"
+email=$1
 PROJECT_PATH=".\jellyfin-web-testing"
 
-# # Navigate to the project directory
-# # cd $SOFTWARE_UNDER_TEST_PATH
+# build_comand=''
+test_command='npm run test'
 
-# # Install project dependencies
-# # npm in stall 
-# # npm start
-# # npm run biuld: development
+# Install test dependencies 
+# npm install -D vitest
+# npm install jsdom
+# npx update-browserslist-db@latest
+# npm i -D @vitest/coverage-v8
 
-# # Install test dependencies 
-# # npm install -D vitest
-# # npm install jsdom
-# # npx update-browserslist-db@latest
-# # npm i -D @vitest/coverage-v8
-
-# # Run Test Code via script 
-# echo "Building Test Code..."
+# Build Software Under Test 
+# echo "Building Software Under Test..."
 # cd $PROJECT_PATH
-npm run test
+# npm start
+# npm run build:development 
 
-# # Capture the results of the build and tests
-BUILD_RESULT="False"
-TEST_RESULT="False"
+# Run Test Code via script 
+echo "Running test code..."
+# cd $PROJECT_PATH
+# #$test_command
 
-# # Check if the build and tests were successful
+check whether all tests passed 
+if [ $test_command -eq 0 ]; then
+    TEST_PASS='True'
+else 
+    TEST_PASS='False'
 
+# email the status of build and tests to the specified email address using curl
+echo "Sending email to $email..."
 
-# # Email the status to the specified email address
-# echo "Sending email to $EMAIL..."
-echo "Build Succeeded: $BUILD_RESULT" > status.txt
-echo "Tests Passed: $TEST_RESULT" >> status.txt
-mail -s $EMAIL < status.txt
+curl --url 'smtps://smtp.gmail.com:465' --ssl-reqd \
+  --mail-from "$email" \
+  --mail-rcpt 'easinemily@gmail.com' \
+  --user "$email"':password' \
+  -T <(echo -e "From: emilysoolee@gmail.com\nTo: easinemily@gmail.com\nSubject: Status:\n\nBuild Result: $BUILD_RESULT, Test Result: $TEST_RESULT")
+
+echo "Status email sent."
+
+# Exit the script
+exit
