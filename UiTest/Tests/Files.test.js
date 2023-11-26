@@ -33,6 +33,13 @@ describe('File exploring tests', function () {
 
         await driver.get('http://192.168.10.154:8080/');
         sleep(5);
+
+        // test inconclusive if website isn't served
+        const selectServerPage = await driver.findElement(By.xpath(pageModel.selectServerPage));
+        if (selectServerPage == null) {
+            // https://mochajs.org/#inclusive-tests
+            this.skip();
+        }
     });
 
     afterEach(function() {
