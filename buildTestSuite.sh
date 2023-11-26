@@ -1,49 +1,48 @@
 # #!/bin/bash 
 
+# To make builTestSuite.sh an executable file, run chmod +x buildTestSuite.sh 
+# and ./buildTestSuite seattleu.team1@gmail.com to run script
+
 email=$1
 PROJECT_PATH=".\jellyfin-web-testing"
-
-build_comand='npm run build:development'
-# test_command='npm run test'
 
 # Build Software Under Test 
 echo "Building Software Under Test..."
 cd $PROJECT_PATH
-npm run start
 npm run build:development
-$build_command
 
 # Check building software under test was successful
 if [ $? -eq 0 ]; then
-    echo 'BUILD_SUCCESS true' > status.txt
+    BUILD_SUCCESS='true'
 else 
-    echo 'BUILD_SUCCESS false' > status.txt
+    BUILD_SUCCESS='false'
 fi
 
 # Run Test Code via script 
 echo "Running test code..."
-cd $PROJECT_PATH
-# $test_command
+npm run test:coverage
 
 # check whether all tests passed 
-# if [ $test_command -eq 0 ]; then
-#     echo 'TEST_PASS true' > test_pass.txt
-# else 
-#     echo 'TEST_PASS false' > test_pass.txt
-
-# echo "continuing after webpack exits)"
-# sleep 1
+if [ $? -eq 0 ]; then
+    TEST_PASS='true'
+else 
+    TEST_PASS='false'
+fi
 
 # email the status of build and tests to the specified email address using curl
 echo "Sending email to $email..."
 
-# curl --url 'smtps://smtp.gmail.com:465' --ssl-reqd \
-#   --mail-from "$email" \
-#   --mail-rcpt 'easinemily@gmail.com' \
-#   --user "$email"':password' \
-#   -T <(echo -e "From: emilysoolee@gmail.com\nTo: easinemily@gmail.com\nSubject: Status:\n\nBuild Result: $BUILD_RESULT")
+curl --url 'smtps://smtp.gmail.com:465' --ssl-reqd \
+  --mail-from "$email" \
+  --mail-rcpt 'emilysoolee@gmail.com' \
+  --user 'seattleu.team1@gmail.com:onmb llqm soeq fdce' \
+  -T <(echo -e "From: emilysoolee@gmail.com\nTo: emilysoolee@gmail.com\nSubject: Status:\n\nTest Pass: $TEST_PASS Build Success: $BUILD_SUCCESS")
 
-# echo "Status email sent."
+if [ $? -eq 0 ]; then
+    echo 'Status email sent!'
+else 
+    echo 'Something went wrong... email was not delivered'
+fi
 
 # Exit the script
 exit
