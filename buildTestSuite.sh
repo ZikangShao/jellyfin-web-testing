@@ -20,7 +20,7 @@ fi
 
 # Run Test Code via script
 echo "Running test code..."
-npm run test:coverage
+npm run test
 
 # check whether all tests passed
 if [ $? -eq 0 ]; then
