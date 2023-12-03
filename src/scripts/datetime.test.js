@@ -1,5 +1,5 @@
-import { describe, expect, test } from 'vitest';
 import datetime from './datetime';
+import { describe, expect, test } from 'vitest';
 
 describe('getDisplayDuration', () => {
     test('getDisplayDuration returns 1h 0m for 36000000000 ticks', () => {
@@ -53,3 +53,32 @@ describe('getDisplayRunningTime', () => {
     });
 });
 
+describe('Performance Tests for getDisplayDuration', () => {
+    const numberOfRuns = 10;
+    const testCases = [
+        { ticks: 36000000000, expected: '1h 0m' },
+        { ticks: 600000000, expected: '1m' },
+        { ticks: 10000000, expected: '1m' },
+        { ticks: 0, expected: '1m' },
+        { ticks: 72000000000, expected: '2h 0m' },
+        { ticks: 158000000000, expected: '4h 23m' }
+    ];
+
+    test('Measure Performance of getDisplayDuration', () => {
+        let totalElapsedTime = 0;
+
+        for (let i = 0; i < numberOfRuns; i++) {
+            testCases.forEach(({ ticks, expected }) => {
+                const start = performance.now();
+                expect(datetime.getDisplayDuration(ticks)).toBe(expected);
+                const end = performance.now();
+                totalElapsedTime += end - start;
+            });
+
+            console.log(`Run ${i + 1}: ${totalElapsedTime} ms`);
+        }
+
+        const averageElapsedTime = totalElapsedTime / (numberOfRuns * testCases.length);
+        console.log(`Average Elapsed Time: ${averageElapsedTime} ms`);
+    });
+});
